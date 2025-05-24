@@ -19,7 +19,7 @@ name: 'Execução Agendada'
 # gatilho de execução agendada = schedule
 
 on:
-  scheduled:
+  schedule:
     - cron: '0 6 * * 1'
 
 # trabalhos/tarefas dentro do pipeline = jobs 
