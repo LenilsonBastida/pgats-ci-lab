@@ -1,7 +1,5 @@
 pipeline {
-  agent {
-    label 'ubuntu' // ou 'any' se o Jenkins estiver rodando em uma máquina compatível
-  }
+  agent any
 
   environment {
     NODE_VERSION = 'latest'
