@@ -4,13 +4,13 @@ pipeline {
   stages {
     stage('Instalar Node.js') {
       steps {
-        bat 'npm install nodejs -y'
+        bat 'npm install nodejs -y --legacy-peer-deps'
       }
     }
 
     stage('Instalar Yarn') {
       steps {
-        bat 'npm install --global yarn'
+        bat 'npm install --g yarn'
       }
     }
 
