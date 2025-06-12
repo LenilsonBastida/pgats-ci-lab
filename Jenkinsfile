@@ -1,31 +1,61 @@
 pipeline {
-  agent any
+  agent {
+    label 'ubuntu' // ou 'any' se o Jenkins estiver rodando em uma máquina compatível
+  }
+
+  triggers {
+    // sem triggers automáticos — execução será manual
+  }
+
+  environment {
+    NODE_VERSION = 'latest'
+  }
 
   stages {
     stage('Checkout') {
       steps {
+        // Clona o repositório
         checkout scm
       }
     }
-    stage('Build') {
+
+    stage('Instalar Node.js') {
       steps {
-        // Exemplo genérico:
-        echo 'Construindo...'
-        // Substitua pelo comando real, ex.:
-        // bat 'mvn clean package'
+        sh '''
+          curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | sudo -E bash -
+          sudo apt-get install -y nodejs
+        '''
       }
     }
-    stage('Test') {
+
+    stage('Instalar Yarn') {
       steps {
-        echo 'Executando testes...'
-        // Ex.: bat 'mvn test'
+        sh 'npm install --global yarn'
       }
     }
-    stage('Deploy') {
+
+    stage('Instalar dependências') {
       steps {
-        echo 'Publicando artefatos...'
-        // Adapte conforme necessidade (deploy, Docker, etc.)
+        sh 'yarn'
       }
+    }
+
+    stage('Instalar Playwright') {
+      steps {
+        sh 'yarn playwright install'
+      }
+    }
+
+    stage('Executar testes E2E') {
+      steps {
+        sh 'yarn run e2e'
+      }
+    }
+  }
+
+  post {
+    always {
+      echo 'Pipeline finalizado.'
     }
   }
 }
