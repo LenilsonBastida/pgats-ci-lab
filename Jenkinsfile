@@ -3,10 +3,6 @@ pipeline {
     label 'ubuntu' // ou 'any' se o Jenkins estiver rodando em uma máquina compatível
   }
 
-  triggers {
-    // sem triggers automáticos — execução será manual
-  }
-
   environment {
     NODE_VERSION = 'latest'
   }
